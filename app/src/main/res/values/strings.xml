@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Save The Bunny</string>
+    <string-array name="game_speed_options">
+        <item>1X</item>
+        <item>1.5X</item>
+        <item>2X</item>
+    </string-array>
+
+</resources>
+

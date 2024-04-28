@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background1"
+    tools:context=".Settings">
+
+    <!-- Container for EditText fields and Spinner -->
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="446dp"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:elevation="4dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/saveChangesButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Display highest score -->
+        <TextView
+            android:id="@+id/highestScoreTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="30dp"
+            android:text="Highest Score: "
+            android:textSize="18sp" />
+
+        <!-- EditText for inputting game speed -->
+        <TextView
+            android:id="@+id/gameSpeedEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Game Speed"
+            android:inputType="numberDecimal"
+            android:padding="30dp" />
+
+        <Spinner
+            android:id="@+id/gameSpeedSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/game_speed_options"
+            android:padding="8dp"
+            android:layout_marginTop="-40dp"
+            android:layout_marginLeft="300dp"
+            android:gravity="right"/>
+    </LinearLayout>
+
+    <!-- Button to save changes -->
+
+    <Button
+        android:id="@+id/saveChangesButton"
+        android:layout_width="253dp"
+        android:layout_height="69dp"
+        android:layout_marginBottom="32dp"
+        android:backgroundTint="@color/design_default_color_secondary_variant"
+        android:elevation="4dp"
+        android:fontFamily="@font/bubblegum_sans"
+        android:padding="16dp"
+        android:text="Save Changes"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_marginTop="36dp"
+        android:backgroundTint="@color/design_default_color_secondary_variant"
+        android:elevation="4dp"
+        android:fontFamily="@font/bubblegum_sans"
+        android:padding="8dp"
+        android:text="Back"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/container"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <!-- Back button -->
+
+</androidx.constraintlayout.widget.ConstraintLayout>
