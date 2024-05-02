@@ -1,4 +1,4 @@
-package com.example.football
+package com.example.saveTheBunny
 
 
 import android.content.Context
@@ -9,7 +9,8 @@ import android.view.View
 import android.widget.*
 
 import androidx.appcompat.app.AppCompatActivity
-import android.media.MediaPlayer
+import com.example.football.R
+
 class Settings : AppCompatActivity() {
 
     private lateinit var sharedPreferences: SharedPreferences
