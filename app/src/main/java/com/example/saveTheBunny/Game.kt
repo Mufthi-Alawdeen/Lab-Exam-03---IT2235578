@@ -108,11 +108,15 @@ class Game : AppCompatActivity() {
         dropRunnable = object : Runnable {
             override fun run() {
                 if (!gamePaused) {
-                    val dropBall = random.nextBoolean()
-                    if (dropBall) {
-                        dropBallFromTop()
-                    } else {
-                        dropShotFromTop()
+                    // Drop multiple objects in each iteration
+                    val numberOfDrops = 3 // Adjust the number of drops as needed
+                    repeat(numberOfDrops) {
+                        val dropCarrot = random.nextBoolean()
+                        if (dropCarrot) {
+                            dropCarrotFromTop()
+                        } else {
+                            dropBombFromTop()
+                        }
                     }
 
                     val nextDelay = (random.nextInt(3000) + 1000) / gameSpeedMultiplier.toInt()
@@ -124,70 +128,71 @@ class Game : AppCompatActivity() {
         handler.post(dropRunnable)
     }
 
-    private fun dropBallFromTop() {
-        val newBall = ImageView(this)
-        newBall.setImageResource(R.drawable.carrot)
-        newBall.layoutParams = carrotImage.layoutParams
 
-        (findViewById<View>(android.R.id.content) as? ViewGroup)?.addView(newBall)
+    private fun dropCarrotFromTop() {
+        val newCarrot = ImageView(this)
+        newCarrot.setImageResource(R.drawable.carrot)
+        newCarrot.layoutParams = carrotImage.layoutParams
+
+        (findViewById<View>(android.R.id.content) as? ViewGroup)?.addView(newCarrot)
 
         val screenWidth = (findViewById<View>(android.R.id.content) as ViewGroup).width
-        val randomX = random.nextInt(screenWidth - newBall.width)
+        val randomX = random.nextInt(screenWidth - newCarrot.width)
 
-        newBall.translationX = randomX.toFloat()
-        newBall.translationY = -newBall.height.toFloat()
+        newCarrot.translationX = randomX.toFloat()
+        newCarrot.translationY = -newCarrot.height.toFloat()
 
-        val ballAnimator = ObjectAnimator.ofFloat(
-            newBall,
+        val carrotAnimator = ObjectAnimator.ofFloat(
+            newCarrot,
             "translationY",
             0f,
             (findViewById<View>(android.R.id.content) as ViewGroup).height.toFloat()
         )
-        ballAnimator.apply {
+        carrotAnimator.apply {
             duration = (1500 / gameSpeedMultiplier).toLong()
             interpolator = AccelerateInterpolator()
             start()
         }
 
-        ballAnimator.doOnStart {
-            newBall.visibility = View.VISIBLE
+        carrotAnimator.doOnStart {
+            newCarrot.visibility = View.VISIBLE
         }
 
-        ballAnimator.doOnEnd {
-            (findViewById<View>(android.R.id.content) as? ViewGroup)?.removeView(newBall)
+        carrotAnimator.doOnEnd {
+            (findViewById<View>(android.R.id.content) as? ViewGroup)?.removeView(newCarrot)
         }
 
-        ballAnimator.doOnEnd {
-            if (isGoalieCatchingBall(newBall)) {
+        carrotAnimator.doOnEnd {
+            if (isBunnyCatchingCarrot(newCarrot)) {
                 score++
                 updateScore()
             }
         }
 
         // Check for collision with the rabbit image
-        ballAnimator.addUpdateListener {
-            if (isCollision(newBall, bunnyImage)) {
-                (findViewById<View>(android.R.id.content) as? ViewGroup)?.removeView(newBall)
+        carrotAnimator.addUpdateListener {
+            if (isCollision(newCarrot, bunnyImage)) {
+                (findViewById<View>(android.R.id.content) as? ViewGroup)?.removeView(newCarrot)
                 // Handle collision action here, like decreasing score or ending the game
             }
         }
     }
 
-    private fun dropShotFromTop() {
-        val newShot = ImageView(this)
-        newShot.setImageResource(R.drawable.spike)
-        newShot.layoutParams = bombImage.layoutParams
+    private fun dropBombFromTop() {
+        val newBomb = ImageView(this)
+        newBomb.setImageResource(R.drawable.spike)
+        newBomb.layoutParams = bombImage.layoutParams
 
-        (findViewById<View>(android.R.id.content) as? ViewGroup)?.addView(newShot)
+        (findViewById<View>(android.R.id.content) as? ViewGroup)?.addView(newBomb)
 
         val screenWidth = (findViewById<View>(android.R.id.content) as ViewGroup).width
-        val randomX = random.nextInt(screenWidth - newShot.width)
+        val randomX = random.nextInt(screenWidth - newBomb.width)
 
-        newShot.translationX = randomX.toFloat()
-        newShot.translationY = -newShot.height.toFloat()
+        newBomb.translationX = randomX.toFloat()
+        newBomb.translationY = -newBomb.height.toFloat()
 
         val shotAnimator = ObjectAnimator.ofFloat(
-            newShot,
+            newBomb,
             "translationY",
             0f,
             (findViewById<View>(android.R.id.content) as ViewGroup).height.toFloat()
@@ -199,33 +204,33 @@ class Game : AppCompatActivity() {
         }
 
         shotAnimator.doOnStart {
-            newShot.visibility = View.VISIBLE
+            newBomb.visibility = View.VISIBLE
         }
 
         shotAnimator.doOnEnd {
-            (findViewById<View>(android.R.id.content) as? ViewGroup)?.removeView(newShot)
+            (findViewById<View>(android.R.id.content) as? ViewGroup)?.removeView(newBomb)
         }
 
         shotAnimator.doOnEnd {
-            if (isGoalieCatchingBall(newShot)) {
+            if (isBunnyCatchingCarrot(newBomb)) {
                 gameOver()
             }
         }
 
         // Check for collision with the rabbit image
         shotAnimator.addUpdateListener {
-            if (isCollision(newShot, bunnyImage)) {
-                (findViewById<View>(android.R.id.content) as? ViewGroup)?.removeView(newShot)
+            if (isCollision(newBomb, bunnyImage)) {
+                (findViewById<View>(android.R.id.content) as? ViewGroup)?.removeView(newBomb)
                 // Handle collision action here, like decreasing score or ending the game
             }
         }
     }
 
-    private fun isGoalieCatchingBall(ball: ImageView): Boolean {
-        val goalieX = bunnyImage.x
-        val goalieWidth = bunnyImage.width
-        val ballX = ball.translationX
-        return ballX in goalieX..(goalieX + goalieWidth)
+    private fun isBunnyCatchingCarrot(carrot: ImageView): Boolean {
+        val carrotX = bunnyImage.x
+        val carrotWidth = bunnyImage.width
+        val ballX = carrot.translationX
+        return ballX in carrotX..(carrotX + carrotWidth)
     }
 
     private fun gameOver() {
