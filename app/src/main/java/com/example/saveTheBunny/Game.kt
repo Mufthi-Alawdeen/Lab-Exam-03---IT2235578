@@ -122,7 +122,7 @@ class Game : AppCompatActivity() {
                     }
 
                     // Calculate next delay for the next iteration
-                    val nextDelay = (random.nextInt(4000) + 500) / gameSpeedMultiplier.toInt()
+                    val nextDelay = (random.nextInt(2000) + 500) / gameSpeedMultiplier.toInt()
                     handler.postDelayed(this, nextDelay.toLong())
                 }
             }
