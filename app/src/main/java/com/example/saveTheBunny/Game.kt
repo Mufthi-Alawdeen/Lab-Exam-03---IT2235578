@@ -1,4 +1,4 @@
-package com.example.football
+package com.example.saveTheBunny
 
 import android.animation.ObjectAnimator
 import android.content.Context
@@ -18,6 +18,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.doOnEnd
 import androidx.core.animation.doOnStart
+import com.example.football.R
 import java.util.*
 
 class Game : AppCompatActivity() {
@@ -108,25 +109,32 @@ class Game : AppCompatActivity() {
         dropRunnable = object : Runnable {
             override fun run() {
                 if (!gamePaused) {
-                    // Drop multiple objects in each iteration
-                    val numberOfDrops = 3 // Adjust the number of drops as needed
-                    repeat(numberOfDrops) {
-                        val dropCarrot = random.nextBoolean()
-                        if (dropCarrot) {
-                            dropCarrotFromTop()
-                        } else {
-                            dropBombFromTop()
-                        }
+                    // Randomly decide which type of objects to drop
+                    val dropCarrot = random.nextBoolean()
+                    val dropBomb = random.nextBoolean()
+
+                    if (dropCarrot) {
+                        dropCarrotFromTop()
                     }
 
-                    val nextDelay = (random.nextInt(3000) + 1000) / gameSpeedMultiplier.toInt()
+                    if (dropBomb) {
+                        dropBombFromTop()
+                    }
+
+                    // Calculate next delay for the next iteration
+                    val nextDelay = (random.nextInt(4000) + 500) / gameSpeedMultiplier.toInt()
                     handler.postDelayed(this, nextDelay.toLong())
                 }
             }
         }
 
+        // Start the dropping process
         handler.post(dropRunnable)
     }
+
+
+
+
 
 
     private fun dropCarrotFromTop() {
