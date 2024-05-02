@@ -1,13 +1,13 @@
-package com.example.football
+package com.example.saveTheBunny
 
 
 import android.content.Intent
-import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
+import com.example.football.R
 
 class MainActivity : AppCompatActivity() {
     private lateinit var playButton: ImageView
